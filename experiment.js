@@ -5,6 +5,8 @@ let csvData = [];
 let studentId = '';
 let imageScores = {}; // Track scores for each image
 
+const IMAGES_INDEX_FILE = 'images.json';    // Name of the JSON file containing image URLs (created using the py script)
+
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('start-button').addEventListener('click', startExperiment);
     document.addEventListener('keydown', handleKeyPress);
@@ -12,11 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadAllImages() {
     try {
-        const response = await fetch('images.json');
+        const response = await fetch(IMAGES_INDEX_FILE);
         const data = await response.json();
         images = data || [];
     } catch (error) {
-        console.error('Error loading images.json:', error);
+        console.error('Error loading ' + IMAGES_INDEX_FILE +' :', error);
         images = [];
     }
 }
@@ -31,7 +33,7 @@ async function startExperiment() {
     await loadAllImages();
     
     if (images.length === 0) {
-        alert('No images found in images.json file!');
+        alert('No images found in ' + IMAGES_INDEX_FILE + ' file!');
         return;
     }
     
