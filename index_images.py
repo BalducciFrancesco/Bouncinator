@@ -1,7 +1,7 @@
 import os
 import json
 
-folder_path = 'raw' # <--- Edit this
+folder_path = 'gray_images' # <--- Edit this
 output_file = 'images.json' # <--- Edit this
 
 # Supported image extensions
