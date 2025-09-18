@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 
-path_to_folder = os.path.expanduser("~/Documents/Bouncinator/gray_images")
+path_to_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "gray_images"))
 
 #load the images and resize them to 100x100
 target_size = (100, 100)

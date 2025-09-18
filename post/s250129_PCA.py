@@ -11,11 +11,11 @@ from scipy.interpolate import interp1d
 # ----------------------------
 # 1. CONFIGURATION
 # ----------------------------
-image_folder = "C:/Users/praga/OneDrive/Desktop/Cog/Bouncinator/gray_images"
+image_folder = os.path.join("..", "gray_images") 
 csv_files = [
-    "C:/Users/praga/OneDrive/Desktop/Cog/Bouncinator/post/s250062.csv",
-    "C:/Users/praga/OneDrive/Desktop/Cog/Bouncinator/post/s250129.csv",
-    "C:/Users/praga/OneDrive/Desktop/Cog/Bouncinator/post/s250200.csv"
+    os.path.join(os.path.dirname(__file__), "s250062.csv"),
+    os.path.join(os.path.dirname(__file__), "s250129.csv"),
+    os.path.join(os.path.dirname(__file__), "s250200.csv")
 ]
 image_size = (200, 200)
 num_pca_components = 40
@@ -26,7 +26,7 @@ threshold_variance = 0.90
 # 2. LOAD IMAGE NAMES AND MERGE SCORES
 # ----------------------------
 image_data = pd.DataFrame({
-    "Image": [f for f in os.listdir(image_folder) if f.lower().endswith((".png", ".jpg", ".jpeg"))]
+    "Image": [f for f in image_folder if f.lower().endswith((".png", ".jpg", ".jpeg"))]
 })
 
 for csv_file in csv_files:
@@ -235,7 +235,7 @@ plt.show()
 # ----------------------------
 # PARAMETERS
 # ----------------------------
-output_folder = r"C:\Users\praga\OneDrive\Desktop\Cog\Bouncinator\Synthetic"
+output_folder = os.path.join("..", "synthetic_images") 
 os.makedirs(output_folder, exist_ok=True)
 
 num_repeats = 10  # each synthetic image shown 10 times
