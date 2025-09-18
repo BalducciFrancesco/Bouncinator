@@ -232,3 +232,37 @@ for i, (rating, face) in enumerate(synthetic_faces):
 plt.suptitle("Synthetic Faces Using First 8 Selected PCs", fontsize=16)
 plt.show()
 
+# ----------------------------
+# PARAMETERS
+# ----------------------------
+output_folder = r"C:\Users\praga\OneDrive\Desktop\Cog\Bouncinator\Synthetic"
+os.makedirs(output_folder, exist_ok=True)
+
+num_repeats = 10  # each synthetic image shown 10 times
+ratings_to_generate = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5]
+
+# ----------------------------
+# GENERATE AND SAVE IMAGES
+# ----------------------------
+synthetic_faces_files = []
+
+for r in ratings_to_generate:
+    pc_scores = get_pc_scores_for_rating(r)  # from your previous code
+    reconstruction = mean_image.flatten().copy()
+    
+    # Use first 5 selected PCs
+    selected_indices = [int(pc.replace("PC", "")) - 1 for pc in selected_features[:5]]
+    for score, idx in zip(pc_scores[:5], selected_indices):
+        reconstruction += score * top_components[idx]
+    
+    img_array = np.clip(reconstruction.reshape(H, W), 0, 1)
+    img = Image.fromarray(np.uint8(img_array * 255))
+    
+    # Save multiple repeats
+    for repeat in range(1, num_repeats + 1):
+        filename = f"{r:.1f}-{repeat}.png"  # e.g., "2.5-3.png"
+        filepath = os.path.join(output_folder, filename)
+        img.save(filepath)
+        synthetic_faces_files.append(filepath)
+
+print(f"Saved {len(synthetic_faces_files)} synthetic images to '{output_folder}'")
